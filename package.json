@@ -1,0 +1,43 @@
+{
+  "name": "crown-vsx",
+  "displayName": "Crown VSX",
+  "description": "Syntax highlighting for Crown, Tiara, and Nimtra Nim frameworks",
+  "version": "0.1.0",
+  "publisher": "nimmer-jp",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": ["Programming Languages"],
+  "keywords": ["nim", "crown", "tiara", "nimtra", "syntax highlighting"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nimmer-jp/crown-vsx"
+  },
+  "license": "MIT",
+  "contributes": {
+    "languages": [
+      {
+        "id": "nim",
+        "aliases": ["Nim", "nim"],
+        "extensions": [".nim", ".nims", ".nimble"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "nim",
+        "scopeName": "source.nim",
+        "path": "./syntaxes/nim.tmLanguage.json"
+      },
+      {
+        "scopeName": "crown.injection",
+        "path": "./syntaxes/crown.tmLanguage.json",
+        "injectTo": ["source.nim"],
+        "embeddedLanguages": {
+          "meta.embedded.block.html": "html",
+          "meta.embedded.expression.nim.crown": "nim"
+        }
+      }
+    ]
+  }
+}
