@@ -1,9 +1,10 @@
 {
-  "name": "crown-vsx",
-  "displayName": "Crown VSX",
+  "name": "nim-crown",
+  "displayName": "Nim Crown",
   "description": "Syntax highlighting for Crown, Tiara, and Nimtra Nim frameworks",
   "version": "0.1.0",
   "publisher": "nimmer-jp",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -11,7 +12,7 @@
   "keywords": ["nim", "crown", "tiara", "nimtra", "syntax highlighting"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/nimmer-jp/crown-vsx"
+    "url": "https://github.com/nimmer-jp/nim-crown"
   },
   "license": "MIT",
   "contributes": {

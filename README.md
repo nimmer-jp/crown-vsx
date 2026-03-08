@@ -1,4 +1,4 @@
-# Crown VSX
+# Nim Crown
 
 Crown, Tiara, Nimtra向けのVSCode構文ハイライト拡張です。
 
@@ -18,4 +18,4 @@ Crown, Tiara, Nimtra向けのVSCode構文ハイライト拡張です。
 
 ## インストール
 
-[Open VSX Registry](https://open-vsx.org/extension/nimmer-jp/crown-vsx) からインストールしてください。
+[Open VSX Registry](https://open-vsx.org/extension/nimmer-jp/nim-crown) からインストールしてください。
