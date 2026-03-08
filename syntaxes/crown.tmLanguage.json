@@ -1,0 +1,112 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Crown VSX Injection",
+  "scopeName": "crown.injection",
+  "injectionSelector": "L:source.nim",
+  "patterns": [
+    { "include": "#html-template" },
+    { "include": "#crown-identifiers" },
+    { "include": "#tiara-components" },
+    { "include": "#nimtra-pragmas" },
+    { "include": "#nimtra-query-methods" }
+  ],
+  "repository": {
+    "html-template": {
+      "name": "meta.embedded.block.html.crown",
+      "begin": "(?<![\\w])(html)(\"\"\")",
+      "end": "(\"\"\")",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.html-template.crown" },
+        "2": { "name": "punctuation.definition.string.begin.nim" }
+      },
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.string.end.nim" }
+      },
+      "contentName": "meta.embedded.block.html",
+      "patterns": [
+        { "include": "#nim-interpolation" },
+        { "include": "text.html.basic" }
+      ]
+    },
+    "nim-interpolation": {
+      "name": "meta.embedded.expression.nim.crown",
+      "begin": "\\{(?![[:space:]])",
+      "end": "\\}",
+      "beginCaptures": { "0": { "name": "punctuation.section.embedded.begin.nim" } },
+      "endCaptures": { "0": { "name": "punctuation.section.embedded.end.nim" } },
+      "patterns": [
+        { "include": "source.nim" }
+      ]
+    },
+    "crown-identifiers": {
+      "patterns": [
+        {
+          "comment": "Crown route handler procs: proc page*, proc post*, etc.",
+          "match": "(?<=\\bproc\\s+)(page|post|layout|get|put|delete|patch|notFound)\\b",
+          "name": "entity.name.function.crown"
+        },
+        {
+          "comment": "Crown response and utility functions",
+          "match": "\\b(htmlResponse|jsonResponse|injectCrownSystem)\\b",
+          "name": "support.function.crown"
+        },
+        {
+          "comment": "Crown Request type",
+          "match": "\\bRequest\\b",
+          "name": "support.type.crown"
+        }
+      ]
+    },
+    "tiara-components": {
+      "patterns": [
+        {
+          "comment": "Tiara namespace",
+          "match": "\\bTiara\\b(?=\\.)",
+          "name": "entity.name.type.tiara"
+        },
+        {
+          "comment": "Tiara component methods after Tiara.",
+          "match": "(?<=\\bTiara\\.)(button|card|text|badge|input|modal|navbar|hero|toast|tabs|dropdown|datePicker|colorPicker|container|searchBox|sectionHeader|codeBlock|carousel|iconWithBadge|notificationIcon|profileIcon|clientScriptTag|defaultStyles)\\b",
+          "name": "support.function.tiara"
+        }
+      ]
+    },
+    "nimtra-pragmas": {
+      "name": "meta.pragma.nim",
+      "begin": "\\{\\.",
+      "end": "\\.\\}",
+      "beginCaptures": { "0": { "name": "punctuation.definition.pragma.begin.nim" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.pragma.end.nim" } },
+      "patterns": [
+        {
+          "comment": "Nimtra model pragmas",
+          "name": "storage.modifier.pragma.nimtra",
+          "match": "\\b(primary|autoincrement|unique|index|maxLength|default|table)\\b"
+        },
+        {
+          "comment": "General Nim pragmas",
+          "name": "keyword.other.pragma.nim",
+          "match": "\\b\\w+\\b"
+        },
+        {
+          "name": "string.quoted.double.nim",
+          "begin": "\"",
+          "end": "\""
+        },
+        {
+          "name": "constant.numeric.nim",
+          "match": "\\b\\d+\\b"
+        }
+      ]
+    },
+    "nimtra-query-methods": {
+      "patterns": [
+        {
+          "comment": "Nimtra query builder and CRUD methods",
+          "match": "(?<=\\.)(select|where|all|first|insert|update|upsert|updateById|deleteById|findById|findByIdModel|findAll|findAllModels|existsById|insertReturningId|upsertReturningId|orderBy|limit|offset|columns|join|count|sync)\\b",
+          "name": "support.function.nimtra"
+        }
+      ]
+    }
+  }
+}
