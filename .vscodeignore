@@ -1,5 +1,7 @@
 .vscode/**
+.claude/**
 docs/**
 .gitignore
+*.vsix
 *.md
 !README.md
