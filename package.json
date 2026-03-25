@@ -2,7 +2,7 @@
   "name": "nim-crown",
   "displayName": "Nim Crown",
   "description": "Syntax highlighting for Crown, Tiara, and Nimtra Nim frameworks",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "nimmer-jp",
   "icon": "icon.png",
   "engines": {
@@ -36,6 +36,7 @@
         "injectTo": ["source.nim"],
         "embeddedLanguages": {
           "meta.embedded.block.html": "html",
+          "meta.embedded.block.css": "css",
           "meta.embedded.expression.nim.crown": "nim"
         }
       }

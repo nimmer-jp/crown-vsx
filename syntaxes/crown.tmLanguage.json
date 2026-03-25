@@ -5,7 +5,10 @@
   "injectionSelector": "L:source.nim",
   "patterns": [
     { "include": "#html-template" },
+    { "include": "#component-template" },
+    { "include": "#css-template" },
     { "include": "#crown-identifiers" },
+    { "include": "#crown-component-sections" },
     { "include": "#tiara-components" },
     { "include": "#nimtra-pragmas" },
     { "include": "#nimtra-query-methods" }
@@ -13,10 +16,30 @@
   "repository": {
     "html-template": {
       "name": "meta.embedded.block.html.crown",
-      "begin": "(?<![\\w])(html)(\"\"\")",
+      "begin": "(?<![\\w])(html)(\\s*:)?\\s*(\"\"\")",
       "end": "(\"\"\")",
       "beginCaptures": {
         "1": { "name": "keyword.other.html-template.crown" },
+        "2": { "name": "punctuation.separator.key-value.nim" },
+        "3": { "name": "punctuation.definition.string.begin.nim" }
+      },
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.string.end.nim" }
+      },
+      "contentName": "meta.embedded.block.html",
+      "patterns": [
+        { "include": "#crown-template-directive-brace" },
+        { "include": "#crown-template-directive-angle" },
+        { "include": "#nim-interpolation" },
+        { "include": "text.html.basic" }
+      ]
+    },
+    "component-template": {
+      "name": "meta.embedded.block.html.crown",
+      "begin": "(?<![\\w])(component)\\s*(\"\"\")",
+      "end": "(\"\"\")",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.component-template.crown" },
         "2": { "name": "punctuation.definition.string.begin.nim" }
       },
       "endCaptures": {
@@ -24,13 +47,60 @@
       },
       "contentName": "meta.embedded.block.html",
       "patterns": [
+        { "include": "#crown-template-directive-brace" },
+        { "include": "#crown-template-directive-angle" },
         { "include": "#nim-interpolation" },
         { "include": "text.html.basic" }
       ]
     },
+    "css-template": {
+      "name": "meta.embedded.block.css.crown",
+      "begin": "(?<![\\w])(css)(\\s*:)?\\s*(\"\"\")",
+      "end": "(\"\"\")",
+      "beginCaptures": {
+        "1": { "name": "keyword.other.css-template.crown" },
+        "2": { "name": "punctuation.separator.key-value.nim" },
+        "3": { "name": "punctuation.definition.string.begin.nim" }
+      },
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.string.end.nim" }
+      },
+      "contentName": "meta.embedded.block.css",
+      "patterns": [
+        { "include": "source.css" }
+      ]
+    },
+    "crown-template-directive-brace": {
+      "name": "meta.embedded.expression.nim.crown",
+      "begin": "\\{\\?(?:=)?",
+      "end": "\\?\\}",
+      "beginCaptures": {
+        "0": { "name": "punctuation.section.embedded.begin.nim" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.embedded.end.nim" }
+      },
+      "patterns": [
+        { "include": "source.nim" }
+      ]
+    },
+    "crown-template-directive-angle": {
+      "name": "meta.embedded.expression.nim.crown",
+      "begin": "<\\?(?:=)?",
+      "end": "\\?>",
+      "beginCaptures": {
+        "0": { "name": "punctuation.section.embedded.begin.nim" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.section.embedded.end.nim" }
+      },
+      "patterns": [
+        { "include": "source.nim" }
+      ]
+    },
     "nim-interpolation": {
       "name": "meta.embedded.expression.nim.crown",
-      "begin": "\\{(?![[:space:]])",
+      "begin": "\\{(?![[:space:]?])",
       "end": "\\}",
       "beginCaptures": { "0": { "name": "punctuation.section.embedded.begin.nim" } },
       "endCaptures": { "0": { "name": "punctuation.section.embedded.end.nim" } },
@@ -41,19 +111,49 @@
     "crown-identifiers": {
       "patterns": [
         {
+          "comment": "Crown component macro declaration with parameters",
+          "match": "\\b(component)\\b(\\s+)([A-Za-z_]\\w*)(?=\\s*\\()",
+          "captures": {
+            "1": { "name": "keyword.declaration.component.crown" },
+            "3": { "name": "entity.name.function.crown" }
+          }
+        },
+        {
+          "comment": "Crown component macro declaration without parameters",
+          "match": "\\b(component)\\b(\\s+)([A-Za-z_]\\w*)(?=\\s*:)",
+          "captures": {
+            "1": { "name": "keyword.declaration.component.crown" },
+            "3": { "name": "entity.name.function.crown" }
+          }
+        },
+        {
           "comment": "Crown route handler procs: proc page*, proc post*, etc.",
           "match": "(?<=\\bproc\\s+)(page|post|layout|get|put|delete|patch|notFound)\\b",
           "name": "entity.name.function.crown"
         },
         {
           "comment": "Crown response and utility functions",
-          "match": "\\b(htmlResponse|jsonResponse|injectCrownSystem)\\b",
+          "match": "\\b(htmlResponse|jsonResponse|injectCrownSystem|disableLayout)\\b",
           "name": "support.function.crown"
         },
         {
-          "comment": "Crown Request type",
-          "match": "\\bRequest\\b",
+          "comment": "Crown core types",
+          "match": "\\b(Request|Response|Layout|Context|Params)\\b",
           "name": "support.type.crown"
+        }
+      ]
+    },
+    "crown-component-sections": {
+      "patterns": [
+        {
+          "comment": "Crown scoped component section labels",
+          "match": "\\b(css|html)\\b(?=\\s*:)",
+          "name": "keyword.other.section.crown"
+        },
+        {
+          "comment": "Crown component DSL helpers",
+          "match": "\\b(text|raw)\\b(?=\\s+)",
+          "name": "support.function.crown"
         }
       ]
     },

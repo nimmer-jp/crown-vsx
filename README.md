@@ -5,10 +5,14 @@ Crown, Tiara, Nimtra向けのVSCode構文ハイライト拡張です。
 ## 機能
 
 - `html""" """` ブロック内のHTMLシンタックスハイライト
+- `component""" """` / `html: """ """` ブロック内のHTMLシンタックスハイライト
+- `css: """ """` ブロック内のCSSシンタックスハイライト
+- Crown raw HTMLディレクティブのハイライト (`{? if ... ?}`, `{?= expr ?}`, `<? ... ?>`)
+- Crown scoped component DSLのハイライト (`component myButton(...):`, `css:`, `html:`, `text`, `raw`)
 - Tiaraコンポーネント関数のハイライト (`Tiara.button`, `Tiara.card` 等)
 - Nimtraモデルプラグマのハイライト (`{.primary.}`, `{.unique.}` 等)
-- NimtraクエリメソッドのハイライCo (`db.select(...)`, `.where(...)` 等)
-- CrownルートハンドラのハイライCo (`proc page*`, `proc post*` 等)
+- Nimtraクエリメソッドのハイライト (`db.select(...)`, `.where(...)` 等)
+- Crownルートハンドラのハイライト (`proc page*`, `proc post*` 等)
 
 ## 対応フレームワーク
 
